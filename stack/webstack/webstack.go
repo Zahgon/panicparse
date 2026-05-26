@@ -9,11 +9,7 @@
 package webstack
 
 import (
-	"bytes"
-	"io"
 	"net/http"
-	"runtime"
-	"strconv"
 
 	"github.com/maruel/panicparse/v2/stack"
 )
@@ -43,85 +39,16 @@ import (
 //
 // similarity: (default: "anypointer") Can be one of stack.Similarity value in
 // lowercase: "exactflags", "exactlines", "anypointer" or "anyvalue".
-func SnapshotHandler(w http.ResponseWriter, req *http.Request) {
-	if req.Method != "GET" {
-		http.Error(w, "invalid method", http.StatusMethodNotAllowed)
-		return
-	}
-
-	maxmem := 64 << 20
-	if s := req.FormValue("maxmem"); s != "" {
-		var err error
-		if maxmem, err = strconv.Atoi(s); err != nil {
-			http.Error(w, "invalid maxmem value", http.StatusBadRequest)
-			return
-		}
-	}
-	opts := stack.DefaultOpts()
-	if s := req.FormValue("augment"); s != "" {
-		v, err := strconv.Atoi(s)
-		if err != nil || v < 0 || v > 1 {
-			http.Error(w, "invalid augment value", http.StatusBadRequest)
-			return
-		}
-		if v == 0 {
-			opts.AnalyzeSources = false
-		}
-	}
-	c, err := snapshot(maxmem, opts)
-	if err != nil {
-		http.Error(w, "failed to process the snapshot, try a larger maxmem value", http.StatusInternalServerError)
-		return
-	}
-
-	var s stack.Similarity
-	switch req.FormValue("similarity") {
-	case "exactflags":
-		s = stack.ExactFlags
-	case "exactlines":
-		s = stack.ExactLines
-	case "anypointer", "":
-		s = stack.AnyPointer
-	case "anyvalue":
-		s = stack.AnyValue
-	default:
-		http.Error(w, "invalid similarity value", http.StatusBadRequest)
-		return
-	}
-
-	w.Header().Set("Content-Type", "text/html; charset=utf-8")
-	_ = c.Aggregate(s).ToHTML(w, "")
-}
+func SnapshotHandler(w http.ResponseWriter, req *http.Request) { _ = "STUB: not implemented"; return }
 
 // snapshot returns a Context based on the snapshot of the stacks of the
 // current process.
 func snapshot(maxmem int, opts *stack.Opts) (*stack.Snapshot, error) {
+	_ = "STUB: not implemented"
 	// We don't know how big the buffer needs to be to collect all the
 	// goroutines. Start with 1 MB and try a few times, doubling each time. Give
 	// up and use a truncated trace if maxmem is not enough.
-	buf := make([]byte, 1<<20)
-	if maxmem < len(buf) {
-		maxmem = len(buf)
-	}
-	for i := 0; ; i++ {
-		n := runtime.Stack(buf, true)
-		if n < len(buf) {
-			buf = buf[:n]
-			break
-		}
-		if len(buf) >= maxmem {
-			break
-		}
-		l := len(buf) * 2
-		if l > maxmem {
-			l = maxmem
-		}
-		buf = make([]byte, l)
-	}
-	s, _, err := stack.ScanSnapshot(bytes.NewReader(buf), io.Discard, opts)
-	// That's expected.
-	if err == io.EOF {
-		err = nil
-	}
-	return s, err
+	return nil, nil
 }
+
+// That's expected.

@@ -6,9 +6,8 @@
 
 package main
 
-import "golang.org/x/sys/windows"
-
 func sysHang() {
+	_ = "STUB: not implemented"
 	// 49.7 days is enough for everyone.
-	windows.SleepEx(0xFFFFFFFF, false)
+	return
 }

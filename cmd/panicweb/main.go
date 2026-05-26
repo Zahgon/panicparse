@@ -23,7 +23,6 @@ import (
 	/* #nosec G108 */
 	_ "net/http/pprof"
 	"os"
-	"runtime"
 	"strings"
 	"sync"
 	"time"
@@ -158,9 +157,4 @@ type writeHang struct {
 	unblock chan struct{}
 }
 
-func (w *writeHang) Write(b []byte) (int, error) {
-	runtime.LockOSThread()
-	w.hung <- struct{}{}
-	<-w.unblock
-	return 0, nil
-}
+func (w *writeHang) Write(b []byte) (int, error) { _ = "STUB: not implemented"; return 0, nil }

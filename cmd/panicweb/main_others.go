@@ -6,5 +6,4 @@
 
 package main
 
-func sysHang() {
-}
+func sysHang() { _ = "STUB: not implemented"; return }

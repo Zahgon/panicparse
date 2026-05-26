@@ -6,10 +6,6 @@
 package internal
 
 // Callback calls back a function through an external then internal function.
-func Callback(f func()) {
-	callback(f)
-}
+func Callback(f func()) { _ = "STUB: not implemented"; return }
 
-func callback(f func()) {
-	f()
-}
+func callback(f func()) { _ = "STUB: not implemented"; return }

@@ -7,8 +7,6 @@
 package internal
 
 import (
-	"io"
-	"log"
 	"net/http"
 )
 
@@ -18,39 +16,20 @@ var Unblock = make(chan struct{})
 // GetAsync does an HTTP GET to the URL but leaves the actual fetching to a
 // goroutine.
 func GetAsync(url string) {
-	/* #nosec G107 */
-	resp, err := http.Get(url)
-	if err != nil {
-		log.Fatalf("get %s: %v", url, err)
-	}
-	go func() {
-		_, err := io.ReadAll(resp.Body)
-		if err != nil {
-			log.Fatalf("failed to read: %v", err)
-		}
-		_ = resp.Body.Close()
-		log.Fatal("the goal is to not complete this request")
-	}()
+	_ = "STUB: not implemented"
+	/* #nosec G107 */ return
 }
 
 // URL1Handler is a http.HandlerFunc that hangs.
 func URL1Handler(w http.ResponseWriter, req *http.Request) {
+	_ = "STUB: not implemented"
 	// Respond the HTTP header to unblock the http.Get() function.
-	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-	w.Header().Set("Content-Length", "100000")
-	w.WriteHeader(200)
-	b := [4096]byte{}
-	_, _ = w.Write(b[:])
-	<-Unblock
+	return
 }
 
 // URL2Handler is a http.HandlerFunc that hangs.
 func URL2Handler(w http.ResponseWriter, req *http.Request) {
+	_ = "STUB: not implemented"
 	// Respond the HTTP header to unblock the http.Get() function.
-	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-	w.Header().Set("Content-Length", "100000")
-	w.WriteHeader(200)
-	b := [4096]byte{}
-	_, _ = w.Write(b[:])
-	<-Unblock
+	return
 }

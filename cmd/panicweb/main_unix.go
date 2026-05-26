@@ -6,8 +6,4 @@
 
 package main
 
-import "golang.org/x/sys/unix"
-
-func sysHang() {
-	_ = unix.Nanosleep(&unix.Timespec{Sec: 366 * 24 * 60 * 60}, &unix.Timespec{})
-}
+func sysHang() { _ = "STUB: not implemented"; return }

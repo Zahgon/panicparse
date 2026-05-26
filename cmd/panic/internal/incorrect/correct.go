@@ -7,6 +7,4 @@
 package correct
 
 // Panic panics.
-func Panic() {
-	panic(42)
-}
+func Panic() { _ = "STUB: not implemented"; return }

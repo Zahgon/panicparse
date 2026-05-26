@@ -13,6 +13,4 @@ type Strùct struct {
 }
 
 // Pànic panics.
-func (s *Strùct) Pànic() {
-	panic(42)
-}
+func (s *Strùct) Pànic() { _ = "STUB: not implemented"; return }
